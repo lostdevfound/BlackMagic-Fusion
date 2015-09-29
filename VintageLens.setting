@@ -1,0 +1,484 @@
+{
+	Tools = ordered() {
+		VintageLens = MacroOperator {
+			Inputs = ordered() {
+				Input1 = InstanceInput {
+					SourceOp = "scaler",
+					Source = "Gain",
+					Name = "overall aberration ",
+					Default = 1.120482,
+				},
+				MainInput1 = InstanceInput {
+					SourceOp = "dummy",
+					Source = "Input",
+				},
+				Input2 = InstanceInput {
+					SourceOp = "red_blur_1",
+					Source = "Center",
+					Name = "sharp spot",
+				},
+				Input3 = InstanceInput {
+					SourceOp = "red_blur_1",
+					Source = "Length",
+					Name = "edge aberrations",
+					Default = 0.0125,
+				},
+				Input4 = InstanceInput {
+					SourceOp = "anamorphic_flare",
+					Source = "XBlurSize",
+					Name = "anamorphic flaring",
+					Default = 12.04819,
+				},
+				Input5 = InstanceInput {
+					SourceOp = "ghost_blur",
+					Source = "YBlurSize",
+					Name = "ghosting",
+					Default = 15.36145,
+				},
+				Input6 = InstanceInput {
+					SourceOp = "ghosting_gain",
+					Source = "Gain",
+					Name = "ghosting gain",
+					Default = 1,
+				},
+				Input7 = InstanceInput {
+					SourceOp = "flare_merge",
+					Source = "BlendClone",
+					Name = "anamorphic flaring gain",
+					Default = 0.5783133,
+				},
+				Input8 = InstanceInput {
+					SourceOp = "mix",
+					Source = "EffectMask",
+				},
+			},
+			Outputs = {
+				Output1 = InstanceOutput {
+					SourceOp = "Offset2",
+					Source = "Angle",
+				},
+				Output2 = InstanceOutput {
+					SourceOp = "Offset2",
+					Source = "Distance",
+				},
+				Output3 = InstanceOutput {
+					SourceOp = "Offset1",
+					Source = "Angle",
+				},
+				Output4 = InstanceOutput {
+					SourceOp = "Offset1",
+					Source = "Distance",
+				},
+				MainOutput1 = InstanceOutput {
+					SourceOp = "mix",
+					Source = "Output",
+				},
+			},
+			ViewInfo = GroupInfo { Pos = { 0, 0, }, },
+			Tools = ordered() {
+				scaler = BrightnessContrast {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						ApplyMaskInverted = Input { Value = 1, },
+						Red = Input { Value = 0, },
+						Green = Input { Value = 0, },
+						Blue = Input { Value = 0, },
+						Gain = Input { Value = 1.120482, },
+						Input = Input {
+							SourceOp = "blue_blur_1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 440, 82.5, }, },
+				},
+				blue_blur_1 = DirectionalBlur {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						ProcessRed = Input { Value = 0, },
+						ProcessGreen = Input { Value = 0, },
+						ProcessAlpha = Input { Value = 0, },
+						ApplyMaskInverted = Input { Value = 1, },
+						Type = Input { Value = 3, },
+						Center = Input {
+							SourceOp = "Offset2",
+							Source = "Position",
+						},
+						Length = Input {
+							Value = 0.025,
+							Expression = "2*red_blur_1.Length",
+						},
+						Input = Input {
+							SourceOp = "green_blur_1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 276.189, 82.5, }, },
+				},
+				Offset2 = Offset {
+					CtrlWZoom = false,
+					CtrlWShown = false,
+					Inputs = {
+						Position = Input {
+							Value = { 0.496723299037, 0.4528244707068, },
+							Expression = "red_blur_1.Center",
+						},
+						Offset = Input { Value = { 0.02, -0.02, }, },
+						ImageAspect = Input { Value = 1.316195, },
+					},
+				},
+				dummy = BrightnessContrast {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						Red = Input { Value = 0, },
+						Green = Input { Value = 0, },
+						Blue = Input { Value = 0, },
+					},
+					ViewInfo = OperatorInfo { Pos = { -181.926, 82.1677, }, },
+				},
+				red_blur_1 = DirectionalBlur {
+					CtrlWShown = false,
+					NameSet = true,
+					CurrentSettings = 2,
+					CustomData = {
+						Settings = {
+							[1] = {
+								Tools = ordered() {
+									red_blur_1 = DirectionalBlur {
+										Inputs = {
+											Type = Input { Value = 3, },
+											Center = Input { Value = { 0.552724846917033, 0.508963260634307, }, },
+											Input = Input {
+												SourceOp = "Loader1",
+												Source = "Output",
+											},
+											ProcessGreen = Input { Value = 0, },
+											Length = Input { Value = -0.0042169, },
+											ProcessBlue = Input { Value = 0, },
+											ProcessAlpha = Input { Value = 0, },
+										},
+										CtrlWZoom = false,
+										NameSet = true,
+										ViewInfo = OperatorInfo { Pos = { 165, 214.5, }, },
+										CustomData = {
+										},
+									},
+								},
+							},
+						},
+					},
+					Inputs = {
+						ProcessGreen = Input { Value = 0, },
+						ProcessBlue = Input { Value = 0, },
+						ProcessAlpha = Input { Value = 0, },
+						ApplyMaskInverted = Input { Value = 1, },
+						Type = Input { Value = 3, },
+						Center = Input { Value = { 0.583262400534536, 0.465410452422114, }, },
+						Length = Input { Value = 0.0125, },
+						Input = Input {
+							SourceOp = "dummy",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 0, 82.5, }, },
+				},
+				green_blur_1 = DirectionalBlur {
+					CtrlWZoom = false,
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						ProcessRed = Input { Value = 0, },
+						ProcessBlue = Input { Value = 0, },
+						ProcessAlpha = Input { Value = 0, },
+						ApplyMaskInverted = Input { Value = 1, },
+						Type = Input { Value = 3, },
+						Center = Input {
+							SourceOp = "Offset1",
+							Source = "Position",
+						},
+						Length = Input {
+							Value = 0.01625,
+							Expression = "1.3*red_blur_1.Length",
+						},
+						Input = Input {
+							SourceOp = "red_blur_1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 152.486, 83.4626, }, },
+				},
+				Offset1 = Offset {
+					CtrlWZoom = false,
+					CtrlWShown = false,
+					Inputs = {
+						Position = Input {
+							Value = { 0.506723299037032, 0.482824470706833, },
+							Expression = "red_blur_1.Center",
+						},
+						Offset = Input { Value = { -0.01, -0.03, }, },
+						ImageAspect = Input { Value = 1, },
+					},
+				},
+				red_CA = Transform {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						ProcessGreen = Input { Value = 0, },
+						ProcessBlue = Input { Value = 0, },
+						ProcessAlpha = Input { Value = 0, },
+						ApplyMaskInverted = Input { Value = 1, },
+						Center = Input { Expression = "Point(0.5, 0.5)", },
+						Input = Input {
+							SourceOp = "scaler",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 550, 82.5, }, },
+				},
+				green_CA = Transform {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						ProcessRed = Input { Value = 0, },
+						ProcessBlue = Input { Value = 0, },
+						ProcessAlpha = Input { Value = 0, },
+						ApplyMaskInverted = Input { Value = 1, },
+						Center = Input {
+							Value = { 0.4988795181, 0.4988795181, },
+							Expression = "Point(0.5-scaler.Gain*0.001, 0.5-scaler.Gain*0.001)",
+						},
+						Input = Input {
+							SourceOp = "red_CA",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 660, 82.5, }, },
+				},
+				LumaKeyer1 = LumaKeyer {
+					CtrlWShown = false,
+					Inputs = {
+						Low = Input { Value = 0.5308219, },
+						Input = Input {
+							SourceOp = "blue_blur_1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 715, -16.5, }, },
+				},
+				blue_CA = Transform {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						ProcessRed = Input { Value = 0, },
+						ProcessGreen = Input { Value = 0, },
+						ProcessAlpha = Input { Value = 0, },
+						ApplyMaskInverted = Input { Value = 1, },
+						Center = Input {
+							Value = { 0.5011204819, 0.5011204819, },
+							Expression = "Point(0.5+scaler.Gain*0.001, 0.5+scaler.Gain*0.001)",
+						},
+						UseSizeAndAspect = Input { Value = 0, },
+						YSize = Input {
+							Value = 1.0011204819,
+							Expression = "1.0+scaler.Gain*0.001",
+						},
+						Input = Input {
+							SourceOp = "green_CA",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 770, 82.5, }, },
+				},
+				ChannelBooleans1 = ChannelBoolean {
+					CtrlWShown = false,
+					Inputs = {
+						ToRed = Input { Value = 2, },
+						ToGreen = Input { Value = 2, },
+						ToAlpha = Input { Value = 16, },
+						Background = Input {
+							SourceOp = "blue_CA",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 880, 148.5, }, },
+				},
+				anamorphic_flare = Blur {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						LockXY = Input { Value = 0, },
+						XBlurSize = Input { Value = 12.04819, },
+						YBlurSize = Input { Value = 0.3012048, },
+						Input = Input {
+							SourceOp = "LumaKeyer1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 880, -16.5, }, },
+					Colors = { TileColor = { R = 0, G = 0, B = 1, }, },
+				},
+				ghost_blur = Blur {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						ApplyMaskInverted = Input { Value = 1, },
+						LockXY = Input { Value = 0, },
+						XBlurSize = Input {
+							Value = 5.12048193333333,
+							Expression = "YBlurSize/3",
+						},
+						YBlurSize = Input { Value = 15.36145, },
+						Input = Input {
+							SourceOp = "ChannelBooleans1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 935, 214.5, }, },
+					Colors = { TileColor = { R = 0.00784313725490196, G = 0.176470588235294, B = 0.901960784313726, }, },
+				},
+				Merge2 = Merge {
+					CtrlWShown = false,
+					Inputs = {
+						ApplyMode = Input { Value = FuID { "Difference", }, },
+						PerformDepthMerge = Input { Value = 0, },
+						Background = Input {
+							SourceOp = "ChannelBooleans1",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "ghost_blur",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 1045, 181.5, }, },
+				},
+				ColorCorrector1 = ColorCorrector {
+					CtrlWShown = false,
+					Inputs = {
+						WheelTintAngle1 = Input { Value = 0.6534557984624, },
+						WheelTintLength1 = Input { Value = 0.6323555555556, },
+						ColorRanges = Input {
+							Value = ColorCurves {
+								Curves = {
+									{
+										Points = {
+											{ 0, 1, },
+											{ 0.4, 0.2, },
+											{ 0.6, 0, },
+											{ 1, 0, },
+										},
+									},
+									{
+										Points = {
+											{ 0, 0, },
+											{ 0.4, 0, },
+											{ 0.6, 0.2, },
+											{ 1, 1, },
+										},
+									},
+								},
+							},
+						},
+						Input = Input {
+							SourceOp = "anamorphic_flare",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 1100, -16.5, }, },
+				},
+				ghosting_gain = BrightnessContrast {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						Input = Input {
+							SourceOp = "Merge2",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 1183.24, 184.786, }, },
+				},
+				Merge3 = Merge {
+					CtrlWShown = false,
+					Inputs = {
+						ApplyMode = Input { Value = FuID { "Screen", }, },
+						PerformDepthMerge = Input { Value = 0, },
+						Background = Input {
+							SourceOp = "ghosting_gain",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "ChannelBooleans1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 1265, 138.233, }, },
+				},
+				ChannelBooleans2 = ChannelBoolean {
+					CtrlWShown = false,
+					Inputs = {
+						ToRed = Input { Value = 5, },
+						ToGreen = Input { Value = 6, },
+						ToAlpha = Input { Value = 8, },
+						Background = Input {
+							SourceOp = "blue_CA",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "Merge3",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 1265, 82.5, }, },
+				},
+				flare_merge = Merge {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						Blend = Input { Value = 0.5783133, },
+						ApplyMaskInverted = Input { Value = 1, },
+						ApplyMode = Input { Value = FuID { "Screen", }, },
+						PerformDepthMerge = Input { Value = 0, },
+						Background = Input {
+							SourceOp = "ChannelBooleans2",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "ColorCorrector1",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 1461.9, 82.0522, }, },
+				},
+				PipeRouter1 = PipeRouter {
+					CtrlWShown = false,
+					Inputs = {
+						Input = Input {
+							SourceOp = "dummy",
+							Source = "Output",
+						},
+					},
+					ViewInfo = PipeRouterInfo { Pos = { 1508.43, 311.294, }, },
+				},
+				mix = Merge {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						PerformDepthMerge = Input { Value = 0, },
+						Background = Input {
+							SourceOp = "PipeRouter1",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "flare_merge",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 1624.78, 89.6765, }, },
+				},
+			},
+		},
+	},
+	ActiveTool = "VintageLens",
+}
